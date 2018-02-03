@@ -12,6 +12,7 @@
 		BA517801202589630094965B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA5177FF202589630094965B /* Main.storyboard */; };
 		BA517803202589630094965B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA517802202589630094965B /* Assets.xcassets */; };
 		BA517806202589630094965B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA517804202589630094965B /* LaunchScreen.storyboard */; };
+		BAA34ED12025C95800ABC33E /* AudioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA34ED02025C95700ABC33E /* AudioViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		BA517802202589630094965B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BA517805202589630094965B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BA517807202589630094965B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BAA34ED02025C95700ABC33E /* AudioViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AudioViewController.swift; path = PlayerTester/TestAudio/AudioViewController.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +57,7 @@
 			isa = PBXGroup;
 			children = (
 				BA5177FB202589630094965B /* AppDelegate.swift */,
+				BAA34ED02025C95700ABC33E /* AudioViewController.swift */,
 				BA5177FD202589630094965B /* ViewController.swift */,
 				BA5177FF202589630094965B /* Main.storyboard */,
 				BA517802202589630094965B /* Assets.xcassets */,
@@ -138,6 +141,7 @@
 			files = (
 				BA5177FE202589630094965B /* ViewController.swift in Sources */,
 				BA5177FC202589630094965B /* AppDelegate.swift in Sources */,
+				BAA34ED12025C95800ABC33E /* AudioViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -211,7 +215,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -262,7 +266,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -275,6 +279,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = TQPN82UBBY;
 				INFOPLIST_FILE = MusicHackDayApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.yudai.hirose.MusicHackDayApp;
@@ -289,6 +294,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = TQPN82UBBY;
 				INFOPLIST_FILE = MusicHackDayApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.yudai.hirose.MusicHackDayApp;

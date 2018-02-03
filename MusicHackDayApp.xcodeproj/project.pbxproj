@@ -13,6 +13,8 @@
 		BA517803202589630094965B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA517802202589630094965B /* Assets.xcassets */; };
 		BA517806202589630094965B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA517804202589630094965B /* LaunchScreen.storyboard */; };
 		BAA34ED12025C95800ABC33E /* AudioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA34ED02025C95700ABC33E /* AudioViewController.swift */; };
+		BABFCE8A2025ECC700321042 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABFCE892025ECC700321042 /* HomeViewController.swift */; };
+		BABFCE8C2025ED9E00321042 /* HomeViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BABFCE8B2025ED9E00321042 /* HomeViewController.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		BA517805202589630094965B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BA517807202589630094965B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BAA34ED02025C95700ABC33E /* AudioViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AudioViewController.swift; path = PlayerTester/TestAudio/AudioViewController.swift; sourceTree = SOURCE_ROOT; };
+		BABFCE892025ECC700321042 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		BABFCE8B2025ED9E00321042 /* HomeViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HomeViewController.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +67,8 @@
 				BA517802202589630094965B /* Assets.xcassets */,
 				BA517804202589630094965B /* LaunchScreen.storyboard */,
 				BA517807202589630094965B /* Info.plist */,
+				BABFCE892025ECC700321042 /* HomeViewController.swift */,
+				BABFCE8B2025ED9E00321042 /* HomeViewController.storyboard */,
 			);
 			path = MusicHackDayApp;
 			sourceTree = "<group>";
@@ -126,6 +132,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BABFCE8C2025ED9E00321042 /* HomeViewController.storyboard in Resources */,
 				BA517806202589630094965B /* LaunchScreen.storyboard in Resources */,
 				BA517803202589630094965B /* Assets.xcassets in Resources */,
 				BA517801202589630094965B /* Main.storyboard in Resources */,
@@ -142,6 +149,7 @@
 				BA5177FE202589630094965B /* ViewController.swift in Sources */,
 				BA5177FC202589630094965B /* AppDelegate.swift in Sources */,
 				BAA34ED12025C95800ABC33E /* AudioViewController.swift in Sources */,
+				BABFCE8A2025ECC700321042 /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

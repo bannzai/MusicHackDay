@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2378FF52B3A63FC3D92CD732 /* Pods_MusicHackDayApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B596F56AD9CBC53F6CA2FE2E /* Pods_MusicHackDayApp.framework */; };
+		868847E0202623F500B7C8E1 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 868847E2202623F500B7C8E1 /* Alamofire.framework */; };
+		868847E1202623F500B7C8E1 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 868847E3202623F500B7C8E1 /* SwiftyJSON.framework */; };
+		86BAB79D2026217900D64694 /* LocationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BAB79C2026217900D64694 /* LocationController.swift */; };
+		86BAB7A0202621B500D64694 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86BAB79F202621B500D64694 /* MapKit.framework */; };
+		86BAB7A2202621D200D64694 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86BAB7A1202621D200D64694 /* CoreLocation.framework */; };
 		BA5177FC202589630094965B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5177FB202589630094965B /* AppDelegate.swift */; };
 		BA5177FE202589630094965B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5177FD202589630094965B /* ViewController.swift */; };
 		BA517801202589630094965B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA5177FF202589630094965B /* Main.storyboard */; };
@@ -18,6 +24,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		868847E2202623F500B7C8E1 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		868847E3202623F500B7C8E1 /* SwiftyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		86BAB79C2026217900D64694 /* LocationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationController.swift; sourceTree = "<group>"; };
+		86BAB79F202621B500D64694 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		86BAB7A1202621D200D64694 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		995BA59A4485FB69A499E813 /* Pods-MusicHackDayApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MusicHackDayApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-MusicHackDayApp/Pods-MusicHackDayApp.release.xcconfig"; sourceTree = "<group>"; };
+		B21038C718CFFDFED53F0BB5 /* Pods-MusicHackDayApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MusicHackDayApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MusicHackDayApp/Pods-MusicHackDayApp.debug.xcconfig"; sourceTree = "<group>"; };
+		B596F56AD9CBC53F6CA2FE2E /* Pods_MusicHackDayApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MusicHackDayApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA5177F8202589630094965B /* MusicHackDayApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MusicHackDayApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA5177FB202589630094965B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BA5177FD202589630094965B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -35,17 +49,45 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				868847E0202623F500B7C8E1 /* Alamofire.framework in Frameworks */,
+				868847E1202623F500B7C8E1 /* SwiftyJSON.framework in Frameworks */,
+				86BAB7A2202621D200D64694 /* CoreLocation.framework in Frameworks */,
+				86BAB7A0202621B500D64694 /* MapKit.framework in Frameworks */,
+				2378FF52B3A63FC3D92CD732 /* Pods_MusicHackDayApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		86BAB79E202621B500D64694 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				868847E2202623F500B7C8E1 /* Alamofire.framework */,
+				868847E3202623F500B7C8E1 /* SwiftyJSON.framework */,
+				86BAB7A1202621D200D64694 /* CoreLocation.framework */,
+				86BAB79F202621B500D64694 /* MapKit.framework */,
+				B596F56AD9CBC53F6CA2FE2E /* Pods_MusicHackDayApp.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9B716FBB038FE647073A399E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B21038C718CFFDFED53F0BB5 /* Pods-MusicHackDayApp.debug.xcconfig */,
+				995BA59A4485FB69A499E813 /* Pods-MusicHackDayApp.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		BA5177EF202589630094965B = {
 			isa = PBXGroup;
 			children = (
 				BA5177FA202589630094965B /* MusicHackDayApp */,
 				BA5177F9202589630094965B /* Products */,
+				86BAB79E202621B500D64694 /* Frameworks */,
+				9B716FBB038FE647073A399E /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -69,6 +111,7 @@
 				BA517807202589630094965B /* Info.plist */,
 				BABFCE892025ECC700321042 /* HomeViewController.swift */,
 				BABFCE8B2025ED9E00321042 /* HomeViewController.storyboard */,
+				86BAB79C2026217900D64694 /* LocationController.swift */,
 			);
 			path = MusicHackDayApp;
 			sourceTree = "<group>";
@@ -80,9 +123,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BA51780A202589630094965B /* Build configuration list for PBXNativeTarget "MusicHackDayApp" */;
 			buildPhases = (
+				FA2B0AC25BBF776453340745 /* [CP] Check Pods Manifest.lock */,
 				BA5177F4202589630094965B /* Sources */,
 				BA5177F5202589630094965B /* Frameworks */,
 				BA5177F6202589630094965B /* Resources */,
+				E41C708441DBF66ECE71A9AD /* [CP] Embed Pods Frameworks */,
+				F5E6141E599C9B0F94832863 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -141,6 +187,62 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		E41C708441DBF66ECE71A9AD /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-MusicHackDayApp/Pods-MusicHackDayApp-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MusicHackDayApp/Pods-MusicHackDayApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F5E6141E599C9B0F94832863 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MusicHackDayApp/Pods-MusicHackDayApp-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FA2B0AC25BBF776453340745 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MusicHackDayApp-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		BA5177F4202589630094965B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -149,6 +251,7 @@
 				BA5177FE202589630094965B /* ViewController.swift in Sources */,
 				BA5177FC202589630094965B /* AppDelegate.swift in Sources */,
 				BAA34ED12025C95800ABC33E /* AudioViewController.swift in Sources */,
+				86BAB79D2026217900D64694 /* LocationController.swift in Sources */,
 				BABFCE8A2025ECC700321042 /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -284,13 +387,14 @@
 		};
 		BA51780B202589630094965B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B21038C718CFFDFED53F0BB5 /* Pods-MusicHackDayApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = TQPN82UBBY;
+				DEVELOPMENT_TEAM = R3LC2FVHL9;
 				INFOPLIST_FILE = MusicHackDayApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.yudai.hirose.MusicHackDayApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tsukurulab.MusicHackDayApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -299,13 +403,14 @@
 		};
 		BA51780C202589630094965B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 995BA59A4485FB69A499E813 /* Pods-MusicHackDayApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = TQPN82UBBY;
+				DEVELOPMENT_TEAM = R3LC2FVHL9;
 				INFOPLIST_FILE = MusicHackDayApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.yudai.hirose.MusicHackDayApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tsukurulab.MusicHackDayApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

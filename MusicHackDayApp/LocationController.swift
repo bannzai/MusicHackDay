@@ -5,7 +5,7 @@ import Alamofire
 import Foundation
 import SwiftyJSON
 
-class ViewController: UIViewController, CLLocationManagerDelegate{
+class LocationController: UIViewController, CLLocationManagerDelegate{
     
     @IBOutlet weak var testMapView: MKMapView!
     
@@ -135,10 +135,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate{
         annotation.coordinate = CLLocationCoordinate2DMake(35.659867, 139.705381)
         self.testMapView.addAnnotation(annotation)
         
-        //        Alamofire.request(sendPotisionURL, method: .post, parameters: parameters, encoding: JSONEncoding.default)
-        //            .responseJSON { response in
-        //                print(response.result.value) // responseのresultプロパティのvalueプロパティをコンソールに出力
-        //        }
         // HTTP body: {"foo": [1, 2, 3], "bar": {"baz": "qux"}}
         //horizontalAccuracyが負の場合は、経度、緯度は有効でない。
         if(location.horizontalAccuracy > 0){
@@ -158,12 +154,17 @@ class ViewController: UIViewController, CLLocationManagerDelegate{
                     let json = JSON(response.result.value)
                     print(json)
                     //neighbours.removeAll()
+                    self.neighbours = [neighbour]()
                     json["neighbours"].forEach{(_, data) in
-                        neighbours.append(neighbour(artist_name: data["artist_name"].string, sound_url: data["artist_name"].string, sound_name: data["artist_name"].string, distance: data["artist_name"].string, lat: data["artist_name"].string, lon: data["artist_name"].string, user_token: data["artist_name"].string))
+                        self.neighbours.append(neighbour(artist_name: data["artist_name"].string!, sound_url: data["sound_url"].string!, sound_name: data["sound_name"].string!, distance: data["distance"].string!, lat: data["lat"].string!, lon: data["lon"].string!, user_token: data["user_token"].string!))
                         //                        let type = data["distance"]
                         //                        print(type) // foo or bar
                     }
                     
+                    
+                    for neighbour in self.neighbours {
+                        print("artist_name" + neighbour.artist_name + ":lat" + neighbour.lat)
+                    }
                     //                    if
                     //                        let json = response.result.value as? [String: Any],
                     //                        let neighbours = json["neighbours"] as? String
@@ -199,12 +200,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate{
         // Dispose of any resources that can be recreated.
     }
     
-    func getArticles() {
-        Alamofire.request("https://qiita.com/api/v2/items")
-            .responseJSON { response in
-                print(response.result.value) // responseのresultプロパティのvalueプロパティをコンソールに出力
-        }
-    }
     
 }
 

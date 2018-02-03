@@ -5,7 +5,6 @@ import UIKit
 import AVFoundation
 import AVKit
 
-///////////////////////////////////////////////////////////////////////////////////////////////
 class AVAudioPlayerUtil {
     
     var audioPlayer:AVAudioPlayer = AVAudioPlayer();
@@ -28,14 +27,11 @@ class AVAudioPlayerUtil {
     func changeVolume(volume : Float) {
         self.audioPlayer.volume = volume;
     }
-    
 }
-///////////////////////////////////////////////////////////////////////////////////////////////
 
 class AudioViewController: UIViewController,URLSessionDownloadDelegate {
-
-    var mPlayerA:AVAudioPlayerUtil!;
-    var mPlayerB:AVAudioPlayerUtil!;
+    var mPlayerA: AVAudioPlayerUtil!;
+    var mPlayerB: AVAudioPlayerUtil!;
     var mPlayerSel = 0;
     
     override func viewDidLoad() {

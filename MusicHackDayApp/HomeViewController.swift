@@ -102,9 +102,9 @@ class HomeViewController: UIViewController {
         
         zip(imageViews, neighbours).forEach { (imageView, neighbour) in
             view.insertSubview(imageView, aboveSubview: backgroundImageView)
-            let distanceX = (neighbour.lat - ownLocation.coordinate.latitude) / Double(UIScreen.main.bounds.width)
-            let distanceY = neighbour.lon - ownLocation.coordinate.longitude / Double(UIScreen.main.bounds.height)
-            imageView.frame.size = CGSize(width: 48, height: 48)
+            let distanceX = ((neighbour.lat - ownLocation.coordinate.latitude) / Double(UIScreen.main.bounds.width)) * Double(ownButton.center.x)
+            let distanceY = ((neighbour.lon - ownLocation.coordinate.longitude) / Double(UIScreen.main.bounds.height)) * Double(ownButton.center.y)
+            imageView.frame.size = CGSize(width: 60, height: 60)
             imageView.center = CGPoint(x: distanceX, y: distanceY)
         }
     }

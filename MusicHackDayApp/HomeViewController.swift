@@ -146,15 +146,9 @@ class HomeViewController: UIViewController {
                 return
             }
             
-            if !player.isExists(url: url) {
-                player.setValue(url: url)
-            }
-            
-            if player.isPlaying == 1 {
-                player.stop()
-                return
-            }
-            
+
+            player.stop()
+            player.setValue(url: url)
             player.play()
         }
         

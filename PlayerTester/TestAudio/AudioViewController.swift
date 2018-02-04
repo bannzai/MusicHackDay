@@ -21,7 +21,6 @@ class AudioPlayerUtil {
     }
     
     func play(){
-        self.audioPlayer.volume = 0.3
         self.audioPlayer.play();
         isPlaying = 1;
     }

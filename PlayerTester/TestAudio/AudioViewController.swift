@@ -49,6 +49,11 @@ class AVAudioPlayerUtil {
             self.audioPlayer.currentTime = duration * time;
         }
     }
+    func changePan(pan : Float) {
+        if ( isPlaying == 1 ) {
+            self.audioPlayer.pan = pan;
+        }
+    }
 }
 
 class AudioViewController: UIViewController, URLSessionDownloadDelegate {
@@ -62,6 +67,12 @@ class AudioViewController: UIViewController, URLSessionDownloadDelegate {
         super.viewDidLoad();
         mPlayerA = AVAudioPlayerUtil();
         mPlayerB = AVAudioPlayerUtil();
+    }
+    
+    @IBAction func ChangeSelecter(_ sender: UISlider) {
+        let vol = sender.value;
+        mPlayerA.changeVolume(volume: vol);
+        mPlayerB.changeVolume(volume: 1.0 - vol);
     }
     
     @IBAction func changeVolume(sender: UISlider) {
@@ -78,6 +89,11 @@ class AudioViewController: UIViewController, URLSessionDownloadDelegate {
     @IBAction func ChangeTempoA(_ sender: UISlider) {
         let tempo = sender.value;
         mPlayerA.changeTempo(tempo: tempo);
+    }
+    
+    @IBAction func ChangePan(_ sender: UISlider) {
+        let pan = sender.value;
+        mPlayerA.changePan(pan: pan);
     }
     
     @IBAction func PushButtonA(_ sender: UIButton) {

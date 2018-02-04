@@ -85,15 +85,19 @@ class HomeViewController: UIViewController {
     }
     
     @IBAction func ownButtonPressed(_ sender: Any) {
-//        let url = "https://maoudamashii.jokersounds.com/music/bgm/mp3/bgm_maoudamashii_orchestra26.mp3"
-//        playSound(mp3URL: url, player: ownPlayer)
+        let partnerImageView = PartnerImageView(image: UIImage(named: "sub_btn")!)
+        let fakeLocation = CLLocation(latitude: 10, longitude: 10)
+        appendNeighbour(imageView: partnerImageView, ownLocation: fakeLocation, lat: 20, lon: 20)
         
-        let viewController = UIStoryboard(name: "SearchViewController", bundle: nil).instantiateInitialViewController() as! SearchViewController
-        viewController.done = { selectedSound in
-            self.selectedSound = selectedSound
-            self.postSound(with: selectedSound.id)
-        }
-        present(viewController, animated: true, completion: nil)
+//        let url = "https://cdn.fbsbx.com/v/t59.3654-21/27020458_1908094265930315_1875117648384098304_n.m4a/hoge.m4a?oh=cfb1366bc17aa8fb505e96eb59b9a609&oe=5A7871AD&dl=1https://cdn.fbsbx.com/v/t59.3654-21/27020458_1908094265930315_1875117648384098304_n.m4a/hoge.m4a?oh=cfb1366bc17aa8fb505e96eb59b9a609&oe=5A7871AD&dl=1"
+//        playSound(mp3URL: url, player: ownPlayer)
+
+//        let viewController = UIStoryboard(name: "SearchViewController", bundle: nil).instantiateInitialViewController() as! SearchViewController
+//        viewController.done = { selectedSound in
+//            self.selectedSound = selectedSound
+//            self.postSound(with: selectedSound.id)
+//        }
+//        present(viewController, animated: true, completion: nil)
     }
     
     func postSound(with id: Int) {

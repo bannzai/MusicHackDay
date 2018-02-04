@@ -5,7 +5,7 @@ import Alamofire
 import Foundation
 import SwiftyJSON
 
-class LocationController: UIViewController, CLLocationManagerDelegate{
+class LOcationController: UIViewController, CLLocationManagerDelegate{
     
     @IBOutlet weak var testMapView: MKMapView!
     
@@ -13,25 +13,25 @@ class LocationController: UIViewController, CLLocationManagerDelegate{
         var artist_name: String
         var sound_url: String
         var sound_name: String
-        var distance: String
-        var lat: String
-        var lon: String
+        var distance: Int
+        var lat: Double
+        var lon: Double
         var user_token: String
         
         init(artist_name: String,
              sound_url: String,
              sound_name: String,
-             distance: String,
-             lat: String,
-             lon: String,
+             distance: Int,
+             lat: Double,
+             lon: Double,
              user_token: String) {
             self.artist_name = artist_name
             self.sound_url = sound_url
-            self.sound_name = sound_url
-            self.distance = sound_url
-            self.lat = sound_url
-            self.lon = sound_url
-            self.user_token = sound_url
+            self.sound_name = sound_name
+            self.distance = distance
+            self.lat = lat
+            self.lon = lon
+            self.user_token = user_token
         }
     }
     //CLLocationManagerの入れ物を用意
@@ -153,17 +153,25 @@ class LocationController: UIViewController, CLLocationManagerDelegate{
                 .responseJSON { response in
                     let json = JSON(response.result.value)
                     print(json)
-                    //neighbours.removeAll()
                     self.neighbours = [neighbour]()
                     json["neighbours"].forEach{(_, data) in
-                        self.neighbours.append(neighbour(artist_name: data["artist_name"].string!, sound_url: data["sound_url"].string!, sound_name: data["sound_name"].string!, distance: data["distance"].string!, lat: data["lat"].string!, lon: data["lon"].string!, user_token: data["user_token"].string!))
+                        //                        print(data["artist_name"].string!)
+                        //                        print(data["sound_url"].string!)
+                        //                        print(data["sound_name"].string!)
+                        //                        print(data["distance"].int!)
+                        //                        print(data["lat"].double!)
+                        //                        print(data["lon"].double!)
+                        //                        print(data["user_token"].string!)
+                        
+                        
+                        self.neighbours.append(neighbour(artist_name: data["artist_name"].string!, sound_url: data["sound_url"].string!, sound_name: data["sound_name"].string!, distance: data["distance"].int!, lat: data["lat"].double!, lon: data["lon"].double!, user_token: data["user_token"].string!))
                         //                        let type = data["distance"]
                         //                        print(type) // foo or bar
                     }
                     
                     
                     for neighbour in self.neighbours {
-                        print("artist_name" + neighbour.artist_name + ":lat" + neighbour.lat)
+                        print("artist_name" + neighbour.artist_name + ":user_token" + neighbour.user_token)
                     }
                     //                    if
                     //                        let json = response.result.value as? [String: Any],
@@ -199,7 +207,6 @@ class LocationController: UIViewController, CLLocationManagerDelegate{
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    
 }
+
 

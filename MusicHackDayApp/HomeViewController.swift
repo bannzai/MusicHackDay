@@ -71,8 +71,8 @@ class HomeViewController: AudioViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-//        timer.fire()
-//        nearistAPITimer.fire()
+        timer.fire()
+        nearistAPITimer.fire()
     }
     
     @IBAction func ownButtonPressed(_ sender: Any) {
@@ -150,7 +150,7 @@ class HomeViewController: AudioViewController {
 //        myTask.resume();
 //    }
     
-    func resetPartnerImageViews(ownLocation: CLLocation) {
+    func resetPartnerImageViews() {
         view.subviews.flatMap { $0 as? PartnerImageView }.forEach { $0.removeFromSuperview() }
         
         let imageViews = neighbours.map { (neighbour) -> PartnerImageView in
@@ -160,14 +160,11 @@ class HomeViewController: AudioViewController {
         
         zip(imageViews, neighbours).forEach { (imageView, neighbour) in
             view.insertSubview(imageView, aboveSubview: backgroundImageView)
-            appendNeighbour(imageView: imageView, ownLocation: ownLocation, lat: neighbour.lat, lon: neighbour.lon)
+            appendNeighbour(imageView: imageView, lat: neighbour.lat, lon: neighbour.lon)
         }
     }
     
-    func appendNeighbour(imageView: UIImageView, ownLocation: CLLocation, lat: Double, lon: Double) {
-        let distanceX = ((lat - ownLocation.coordinate.latitude) / Double(UIScreen.main.bounds.width)) * Double(ownButton.center.x)
-        let distanceY = ((lon - ownLocation.coordinate.longitude) / Double(UIScreen.main.bounds.height)) * Double(ownButton.center.y)
-        
+    func appendNeighbour(imageView: UIImageView,  lat: Double, lon: Double) {
         imageView.frame.size = CGSize(width: 60, height: 60)
         let x = UIScreen.main.bounds.width - 120
         let y = CGFloat(100)
@@ -225,56 +222,56 @@ extension HomeViewController {
     }
     
     @objc func callLocationAPI() {
-        guard let location = lastRecognizedLocation else {
-            return
-        }
-        
-        guard let token = UserDefaults.standard.string(forKey: "token") else {
-            print("necessary token")
-            return
-        }
-        
-        let parameters: Parameters = [
-            "token": token,
-            "lat": location.coordinate.latitude,
-            "lon": location.coordinate.longitude
-        ]
-        
-        let sendPotisionURL = "https://taptappun.net/hackathon/musichackday2018/api/location/notify"
-        Alamofire.request(sendPotisionURL,
-                          method: .post,
-                          parameters: parameters)
-            .responseJSON { response in
-                guard let value = response.result.value else {
-                    return
-                }
-                let json = JSON(value)
-                self.neighbours = [Neighbour]()
-                json["neighbours"].forEach{(_, data) in
-                    self.neighbours.append(
-                        Neighbour(
-                            artist_name: data["artist_name"].string!,
-                            sound_url: data["sound_url"].string!,
-                            sound_name: data["sound_name"].string!,
-                            distance: data["distance"].int!,
-                            lat: data["lat"].double!,
-                            lon: data["lon"].double!,
-                            token: data["user_token"].string!
-                        )
-                    )
-                }
-                
-                for neighbour in self.neighbours {
-                    print(
-                        "artist_name: "
-                            + neighbour.artist_name
-                            + ", token: "
-                            + neighbour.token
-                    )
-                }
-                
-                self.resetPartnerImageViews(ownLocation: location)
-        }
+//        guard let location = lastRecognizedLocation else {
+//            return
+//        }
+//
+//        guard let token = UserDefaults.standard.string(forKey: "token") else {
+//            print("necessary token")
+//            return
+//        }
+//
+//        let parameters: Parameters = [
+//            "token": token,
+//            "lat": location.coordinate.latitude,
+//            "lon": location.coordinate.longitude
+//        ]
+//
+//        let sendPotisionURL = "https://taptappun.net/hackathon/musichackday2018/api/location/notify"
+//        Alamofire.request(sendPotisionURL,
+//                          method: .post,
+//                          parameters: parameters)
+//            .responseJSON { response in
+//                guard let value = response.result.value else {
+//                    return
+//                }
+//                let json = JSON(value)
+//                self.neighbours = [Neighbour]()
+//                json["neighbours"].forEach{(_, data) in
+//                    self.neighbours.append(
+//                        Neighbour(
+//                            artist_name: data["artist_name"].string!,
+//                            sound_url: data["sound_url"].string!,
+//                            sound_name: data["sound_name"].string!,
+//                            distance: data["distance"].int!,
+//                            lat: data["lat"].double!,
+//                            lon: data["lon"].double!,
+//                            token: data["user_token"].string!
+//                        )
+//                    )
+//                }
+//
+//                for neighbour in self.neighbours {
+//                    print(
+//                        "artist_name: "
+//                            + neighbour.artist_name
+//                            + ", token: "
+//                            + neighbour.token
+//                    )
+//                }
+//
+//        }
+                self.resetPartnerImageViews()
     }
 }
 

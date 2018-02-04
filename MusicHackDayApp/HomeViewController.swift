@@ -10,36 +10,7 @@ import UIKit
 import CoreLocation
 import Alamofire
 import SwiftyJSON
-
-struct Neighbour {
-    var artist_name: String
-    var sound_url: String
-    var sound_name: String
-    var distance: Int
-    var lat: Double
-    var lon: Double
-    var user_token: String
-    
-    init(artist_name: String,
-         sound_url: String,
-         sound_name: String,
-         distance: Int,
-         lat: Double,
-         lon: Double,
-         user_token: String) {
-        self.artist_name = artist_name
-        self.sound_url = sound_url
-        self.sound_name = sound_name
-        self.distance = distance
-        self.lat = lat
-        self.lon = lon
-        self.user_token = user_token
-    }
-}
-
-class PartnerImageView: UIImageView {
-    
-}
+import Nuke
 
 class HomeViewController: UIViewController {
     
@@ -50,6 +21,15 @@ class HomeViewController: UIViewController {
     var neighbours = [Neighbour]()
     var lastRecognizedLocation : CLLocation?
     
+    var selectedSound: Sound?
+
+    @IBOutlet weak var ownSoundNameLabel: UILabel!
+    @IBOutlet weak var ownArtistNameLabel: UILabel!
+    @IBOutlet weak var ownImageView: UIImageView!
+
+    @IBOutlet weak var partnerSoundNameLabel: UILabel!
+    @IBOutlet weak var partnerArtistNameLabel: UILabel!
+
     lazy var timer: Timer = {
         return Timer.scheduledTimer(
             timeInterval: 1,
@@ -74,11 +54,25 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        ownArtistNameLabel.text = ""
+        ownSoundNameLabel.text = ""
+        
+        partnerSoundNameLabel.text = ""
+        partnerArtistNameLabel.text = ""
+        
         setupLocation()
         requestAuthorized()
         startFetchLocation()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+    }
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -87,9 +81,50 @@ class HomeViewController: UIViewController {
     }
     
     @IBAction func ownButtonPressed(_ sender: Any) {
-//        locationManager(locationManager, didUpdateLocations: [CLLocation(latitude: 10, longitude: 10)])
-//        locationManager(locationManager, didUpdateLocations: [CLLocation(latitude: 11, longitude: 11)])
-//        locationManager(locationManager, didUpdateLocations: [CLLocation(latitude: 20, longitude: 20)])
+        let viewController = UIStoryboard(name: "SearchViewController", bundle: nil).instantiateInitialViewController() as! SearchViewController
+        viewController.done = { selectedSound in
+            self.selectedSound = selectedSound
+            self.postSound(with: selectedSound.id)
+        }
+        present(viewController, animated: true, completion: nil)
+    }
+    
+    func postSound(with id: Int) {
+        guard let token = UserDefaults.standard.string(forKey: "token") else {
+            print("necessary token")
+            return
+        }
+
+        Alamofire
+            .request(
+                "https://taptappun.net/hackathon/musichackday2018/api/sound/play",
+                method: .post,
+                parameters: [
+                    "user_token": token,
+                    "sound_id": id
+                ]
+            )
+            .responseJSON { (response) in
+                let json = JSON(response.result.value!)
+                self.selectedSound?.mp3URL = json["sound_file_url"].string ?? "https://maoudamashii.jokersounds.com/music/bgm/mp3/bgm_maoudamashii_orchestra26.mp3"
+                self.configureOwnSound()
+        }
+        
+        navigationController?.popViewController(animated: true)
+    }
+    
+    func configureOwnSound() {
+        guard
+            let selectedSound = selectedSound
+            else {
+            return
+        }
+       
+        
+        let url = URL(string: selectedSound.imageUrl)!
+        Manager.shared.loadImage(with: url, into: ownImageView)
+        ownSoundNameLabel.text = selectedSound.name
+        ownArtistNameLabel.text = selectedSound.artistName
     }
     
     func resetPartnerImageViews(ownLocation: CLLocation) {

@@ -8,4 +8,5 @@ target 'MusicHackDayApp' do
   # Pods for MusicHackDayApp
     pod 'Alamofire', '~> 4.5'
     pod 'SwiftyJSON'
+    pod 'Nuke'
 end

@@ -21,6 +21,11 @@
 		BABFCE8A2025ECC700321042 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABFCE892025ECC700321042 /* HomeViewController.swift */; };
 		BABFCE8C2025ED9E00321042 /* HomeViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BABFCE8B2025ED9E00321042 /* HomeViewController.storyboard */; };
 		BAE7899D2026984B0072E81E /* LocationViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BAE7899C2026984B0072E81E /* LocationViewController.storyboard */; };
+		BAE7899F2026ABD00072E81E /* Structures.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE7899E2026ABD00072E81E /* Structures.swift */; };
+		BAE789A12026ACB90072E81E /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE789A02026ACB90072E81E /* SearchViewController.swift */; };
+		BAE789A32026ACC90072E81E /* SearchViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BAE789A22026ACC90072E81E /* SearchViewController.storyboard */; };
+		BAE789A62026AE4B0072E81E /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE789A42026AE4B0072E81E /* SearchTableViewCell.swift */; };
+		BAE789A72026AE4B0072E81E /* SearchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAE789A52026AE4B0072E81E /* SearchTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +49,11 @@
 		BABFCE892025ECC700321042 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		BABFCE8B2025ED9E00321042 /* HomeViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HomeViewController.storyboard; sourceTree = "<group>"; };
 		BAE7899C2026984B0072E81E /* LocationViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LocationViewController.storyboard; sourceTree = "<group>"; };
+		BAE7899E2026ABD00072E81E /* Structures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Structures.swift; sourceTree = "<group>"; };
+		BAE789A02026ACB90072E81E /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		BAE789A22026ACC90072E81E /* SearchViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SearchViewController.storyboard; sourceTree = "<group>"; };
+		BAE789A42026AE4B0072E81E /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
+		BAE789A52026AE4B0072E81E /* SearchTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +123,11 @@
 				BA517804202589630094965B /* LaunchScreen.storyboard */,
 				BA517807202589630094965B /* Info.plist */,
 				BABFCE892025ECC700321042 /* HomeViewController.swift */,
+				BAE789A02026ACB90072E81E /* SearchViewController.swift */,
+				BAE789A42026AE4B0072E81E /* SearchTableViewCell.swift */,
+				BAE789A52026AE4B0072E81E /* SearchTableViewCell.xib */,
+				BAE789A22026ACC90072E81E /* SearchViewController.storyboard */,
+				BAE7899E2026ABD00072E81E /* Structures.swift */,
 				BABFCE8B2025ED9E00321042 /* HomeViewController.storyboard */,
 				86BAB79C2026217900D64694 /* LocationController.swift */,
 				BAE7899C2026984B0072E81E /* LocationViewController.storyboard */,
@@ -191,7 +206,9 @@
 				BA517806202589630094965B /* LaunchScreen.storyboard in Resources */,
 				BA517803202589630094965B /* Assets.xcassets in Resources */,
 				BA517801202589630094965B /* Main.storyboard in Resources */,
+				BAE789A72026AE4B0072E81E /* SearchTableViewCell.xib in Resources */,
 				BAE7899D2026984B0072E81E /* LocationViewController.storyboard in Resources */,
+				BAE789A32026ACC90072E81E /* SearchViewController.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -248,7 +265,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -258,10 +275,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BAE789A12026ACB90072E81E /* SearchViewController.swift in Sources */,
+				BAE7899F2026ABD00072E81E /* Structures.swift in Sources */,
 				BA5177FE202589630094965B /* ViewController.swift in Sources */,
 				BA5177FC202589630094965B /* AppDelegate.swift in Sources */,
 				BAA34ED12025C95800ABC33E /* AudioViewController.swift in Sources */,
 				BABFCE8A2025ECC700321042 /* HomeViewController.swift in Sources */,
+				BAE789A62026AE4B0072E81E /* SearchTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

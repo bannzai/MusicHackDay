@@ -172,7 +172,7 @@ class AudioViewController: UIViewController, URLSessionDownloadDelegate {
             mPlayerA.stop();
             return;
         }
-        downloadFile(url:"https://s3-ap-northeast-1.amazonaws.com/taptappun/project/crawler/audios/BzUltraSoul.mp3");
+        downloadFile(url:"https://s3-ap-northeast-1.amazonaws.com/taptappun/project/crawler/audios/SEKAINOOWARIRPG.mp3");
     }
     
     @IBAction func pushButtonB(_ sender: UIButton) {
@@ -181,12 +181,12 @@ class AudioViewController: UIViewController, URLSessionDownloadDelegate {
             mPlayerB.stop();
             return;
         }
-        downloadFile(url:"https://maoudamashii.jokersounds.com/music/bgm/m4a/bgm_maoudamashii_piano41.m4a");
+        downloadFile(url:"https://s3-ap-northeast-1.amazonaws.com/taptappun/project/crawler/audios/BzUltraSoul.mp3");
     }
     
     func downloadFile(url: String) {
         // 通信のコンフィグを用意
-        let myConfig: URLSessionConfiguration = URLSessionConfiguration.background(withIdentifier: "backgroundSession")
+        let myConfig: URLSessionConfiguration = URLSessionConfiguration.background(withIdentifier: url)
         // Sessionを作成する
         let mySession: URLSession = URLSession(
             configuration: myConfig,
@@ -210,23 +210,35 @@ class AudioViewController: UIViewController, URLSessionDownloadDelegate {
         mPlayerUrlB = url;
     }
     
-    /*
-     ダウンロード終了時に呼び出されるデリゲート
-     */
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-        if (mPlayerSel==0) {
+    func play2(with location: URL) {
+        mPlayerB.setValue(url: location)
+        if (mPlayerB.isPlaying == 1) {
+            mPlayerB.stop();
+        } else {
+            mPlayerB.play();
+        }
+    }
+
+    func play(with location: URL) {
             mPlayerA.setValue(url: location)
             if (mPlayerA.isPlaying == 1) {
                 mPlayerA.stop();
             } else {
                 mPlayerA.play();
             }
-        } else {
-            mPlayerB.setValue(url: location)
-            if (mPlayerB.isPlaying == 1) {
-                mPlayerB.stop();
-            } else {
-                mPlayerB.play();
+    }
+    
+    /*
+     ダウンロード終了時に呼び出されるデリゲート
+     */
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
+        DispatchQueue.main.async {
+            if session.configuration.identifier == "https://s3-ap-northeast-1.amazonaws.com/taptappun/project/crawler/audios/BzUltraSoul.mp3" {
+                print(" ---- A ----")
+                self.play2(with: location)
+            } else if (session.configuration.identifier == "https://s3-ap-northeast-1.amazonaws.com/taptappun/project/crawler/audios/SEKAINOOWARIRPG.mp3") {
+                print(" ---- B ----")
+                self.play(with: location)
             }
         }
     }

@@ -49,7 +49,10 @@ class SearchViewController: UIViewController {
                 "keyword": word
             ])
             .responseJSON { (response) in
-                let json = JSON(response.result.value!)
+                guard let value = response.result.value else {
+                    return
+                }
+                let json = JSON(value)
                 self.list = json["results"].arrayValue.map({ (json) in
                     return Sound(json: json)
                 })

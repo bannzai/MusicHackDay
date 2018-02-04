@@ -65,26 +65,24 @@ class HomeViewController: AudioViewController {
         setupLocation()
         requestAuthorized()
         startFetchLocation()
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        timer.fire()
-        nearistAPITimer.fire()
+//        timer.fire()
+//        nearistAPITimer.fire()
     }
     
     @IBAction func ownButtonPressed(_ sender: Any) {
-//        let mp3URL = "https://maoudamashii.jokersounds.com/music/bgm/mp3/bgm_maoudamashii_healing17.mp3"
-//        self.selectedSound?.mp3URL = mp3URL
-//        self.playSound(mp3URL: mp3URL, player: self.ownPlayer)
-//        self.dismiss(animated: true, completion: nil)
-//        pushButtonB(UIButton())
         let viewController = UIStoryboard(name: "SearchViewController", bundle: nil).instantiateInitialViewController() as! SearchViewController
         viewController.done = { selectedSound in
-            self.pushButtonB(UIButton())
-            self.PushButtonA(UIButton()
-            self.configureOwnSound()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+                self.pushButtonB(UIButton())
+                self.configureOwnSound()
+            })
+            self.PushButtonA(UIButton())
             self.configurePartner()
             self.dismiss(animated: true, completion: nil)
         }
@@ -119,7 +117,7 @@ class HomeViewController: AudioViewController {
     }
 
     func configureOwnSound() {
-        let url = URL(string: "https://l.facebook.com/l.php?u=https%3A%2F%2Fimg.youtube.com%2Fvi%2FUjb-ZeX7Mo8%2Fdefault.jpg&h=ATP3dM1R2a975zoEMXb65CJtY3ON7PkeNzN5vYcCzpzFJksxDvFpPDhIId2FMcHuVbFCAnAxDT7bQQ6_2veQM1fFjtBLJHVi9rAIMh8uYij5dWny1xnxBog2Uvsoq2HEvWfZv2UHRihJjH-fVeaPeQ")!
+        let url = URL(string: "https://img.youtube.com/vi/Ujb-ZeX7Mo8/default.jpg")!
         Manager.shared.loadImage(with: url, into: ownImageView)
         ownSoundNameLabel.text = "Ultra Soul!"
         ownArtistNameLabel.text = "B'z"

@@ -5,97 +5,209 @@ import UIKit
 import AVFoundation
 import AVKit
 
-class AudioPlayerUtil {
+class AVAVAudioPlayerUtil {
     
-    var audioPlayer:AVAudioPlayer = AVAudioPlayer();
+    var audioPlayer:AVAudioPlayer!
+    
+    var engine = AVAudioEngine();
+    var player = AVAudioPlayerNode();
+    var eq = AVAudioUnitEQ(numberOfBands: 3);
+    var timePitch = AVAudioUnitTimePitch();
+    var delay = AVAudioUnitDelay();
+    var file:AVAudioFile!;
+    
+    var sampleRate = 44100.0;
+    var duration = 0.0;
     var isPlaying = 0;
     
-    func setValue(url: URL){
-        self.audioPlayer = try! AVAudioPlayer(contentsOf: url)
-        self.audioPlayer.prepareToPlay();
+    func initPlayer() {
+        let mixer = engine.mainMixerNode;
+        eq.bands[0].bypass = false;
+        eq.bands[0].filterType = .lowPass;
+        eq.bands[0].bandwidth = 1.0;
+        eq.bands[0].frequency = 20000.0;
+        eq.bands[0].gain = -6.0;
+        eq.globalGain = 0.0;
+        engine.attach(eq);
+        
+        timePitch.rate = 1.0;
+        delay.delayTime = 0.5;
+        delay.feedback = 0;
+        delay.wetDryMix = 0;
+        engine.attach(timePitch);
+        engine.attach(player);
+        engine.attach(delay);
     }
-    
-    func isExists(url: URL)  -> Bool {
-        let value = try? AVAudioPlayer(contentsOf: url)
-        return value == nil
+    func setValue(url: URL) {
+        
+        do {
+            try file = AVAudioFile(forReading: url);
+        } catch {
+        }
+        
+        
+        if ((file) != nil) {
+            let mixer = engine.mainMixerNode;
+            engine.connect(player, to: eq, format: file.processingFormat)
+            engine.connect(eq, to: delay, format: file.processingFormat)
+            engine.connect(delay, to: timePitch, format: file.processingFormat)
+            engine.connect(timePitch, to: mixer, format: file.processingFormat)
+            
+            player.scheduleFile(file, at: nil, completionHandler: nil)
+            try? engine.start()
+            sampleRate = file.fileFormat.sampleRate;
+            duration = Double(file.length) / sampleRate;
+        }
     }
-    
-    func play(){
-        self.audioPlayer.play();
+    func play() {
+        player.play();
         isPlaying = 1;
     }
     func stop(){
-        self.audioPlayer.stop();
+        player.stop();
         isPlaying = 0;
     }
     func changeVolume(volume : Float) {
-        self.audioPlayer.volume = volume;
+        if ( isPlaying == 1 ) {
+            let mixer = engine.mainMixerNode;
+            mixer.outputVolume = volume;
+        }
+    }
+    func changeTempo(tempo : Float) {
+        if ( isPlaying == 1 ) {
+            timePitch.rate = tempo;
+        }
+    }
+    func changeTime(pos : TimeInterval) {
+        if ( isPlaying == 1 ) {
+            let time = pos * duration;
+            let newsampletime = AVAudioFramePosition(sampleRate * time);
+            let length = self.duration - time;
+            let framestoplay = AVAudioFrameCount(sampleRate * length)
+            player.stop()
+            if (framestoplay > 100) {
+                player.scheduleSegment(file,
+                                       startingFrame: newsampletime,
+                                       frameCount: framestoplay,
+                                       at: nil,
+                                       completionHandler: nil
+                )
+            }
+            player.play()
+        }
+    }
+    func changePan(pan : Float) {
+        if ( isPlaying == 1 ) {
+            let mixer = engine.mainMixerNode;
+            mixer.pan = pan;
+        }
+    }
+    func changeCutoff(freq : Float) {
+        eq.bands[0].frequency = freq;
+    }
+    func changeDelayLevel(level : Float) {
+        delay.feedback  = level;
+        if ( level > 0 ) {
+            delay.wetDryMix = level;
+        }
     }
 }
 
-class AudioViewController: UIViewController,URLSessionDownloadDelegate {
-    var ownPlayer: AudioPlayerUtil!;
-    var partnerPlayer: AudioPlayerUtil!;
+class AudioViewController: UIViewController, URLSessionDownloadDelegate {
+    var mPlayerA: AVAVAudioPlayerUtil!;
+    var mPlayerB: AVAVAudioPlayerUtil!;
+    var mPlayerUrlA : String!;
+    var mPlayerUrlB : String!;
     var mPlayerSel = 0;
     
     override func viewDidLoad() {
         super.viewDidLoad();
-        
-        ownPlayer = AudioPlayerUtil();
-        partnerPlayer = AudioPlayerUtil();
+        mPlayerA = AVAVAudioPlayerUtil();
+        mPlayerA.initPlayer();
+        mPlayerB = AVAVAudioPlayerUtil();
+        mPlayerB.initPlayer();
+    }
+    
+    @IBAction func ChangeSelecter(_ sender: UISlider) {
+        let vol = sender.value;
+        mPlayerA.changeVolume(volume: vol);
+        mPlayerB.changeVolume(volume: 1.0 - vol);
     }
     
     @IBAction func changeVolume(sender: UISlider) {
         let vol = sender.value;
-        ownPlayer.changeVolume(volume: vol)
-        partnerPlayer.changeVolume(volume: vol)
+        mPlayerA.changeVolume(volume: vol);
+        mPlayerB.changeVolume(volume: 1.0 - vol);
     }
     
-    // player 1
-    @IBAction func pushButton1(sender: UIButton) {
+    @IBAction func ChangeTime(_ sender: UISlider) {
+        let pos = Double(sender.value);
+        mPlayerA.changeTime(pos: pos);
+    }
+    
+    @IBAction func ChangeTempoA(_ sender: UISlider) {
+        let tempo = sender.value;
+        mPlayerA.changeTempo(tempo: tempo);
+    }
+    
+    @IBAction func ChangePan(_ sender: UISlider) {
+        let pan = sender.value;
+        mPlayerA.changePan(pan: pan);
+    }
+    
+    @IBAction func ChangeCutoff(_ sender: UISlider) {
+        let cf = sender.value;
+        mPlayerA.changeCutoff(freq: cf);
+    }
+    
+    @IBAction func ChangeDelayLevel(_ sender: UISlider) {
+        let level = sender.value;
+        mPlayerB.changeDelayLevel(level: level);
+    }
+    
+    
+    @IBAction func PushButtonA(_ sender: UIButton) {
         mPlayerSel = 0;
-        
-        // 通信のコンフィグを用意
-        let myConfig:URLSessionConfiguration = URLSessionConfiguration.background(withIdentifier: "backgroundSession");
-        
-        let mySession = URLSession(configuration: myConfig, delegate: self, delegateQueue: nil)
-        
-        // ダウンロード先のURLからリクエストを生成
-        let myURL:URL = URL(string: "https://maoudamashii.jokersounds.com/music/bgm/mp3/bgm_maoudamashii_orchestra26.mp3")!;
-        let myRequest:URLRequest = URLRequest(url: myURL);
-        
-        // ダウンロードタスクを生成
-        let myTask:URLSessionDownloadTask = mySession.downloadTask(with: myRequest)
-        
-        // タスクを実行
-        myTask.resume();
+        if (mPlayerA.isPlaying == 1) {
+            mPlayerA.stop();
+            return;
+        }
+        downloadFile(url:"https://s3-ap-northeast-1.amazonaws.com/taptappun/project/crawler/audios/BzUltraSoul.mp3");
     }
     
-    //再生ボタン2押下時の呼び出しメソッド
-    @IBAction func pushButton2(sender: UIButton) {
+    @IBAction func pushButtonB(_ sender: UIButton) {
         mPlayerSel = 1;
+        if (mPlayerB.isPlaying == 1) {
+            mPlayerB.stop();
+            return;
+        }
+        downloadFile(url:"https://maoudamashii.jokersounds.com/music/bgm/m4a/bgm_maoudamashii_piano41.m4a");
+    }
+    
+    func downloadFile(url: String) {
         // 通信のコンフィグを用意
-        
         let myConfig: URLSessionConfiguration = URLSessionConfiguration.background(withIdentifier: "backgroundSession")
-        
         // Sessionを作成する
         let mySession: URLSession = URLSession(
             configuration: myConfig,
             delegate: self,
             delegateQueue: nil
         );
-        
-        
-        
-        // ダウンロード先のURLからリクエストを生成
-        let myURL:URL = URL(string: "https://maoudamashii.jokersounds.com/music/bgm/mp3/bgm_maoudamashii_healing17.mp3")!;
+        // url 設定
+        let myURL:URL = URL(string: url)!;
         let myRequest:URLRequest = URLRequest(url: myURL);
-        
         // ダウンロードタスクを生成
         let myTask:URLSessionDownloadTask = mySession.downloadTask(with: myRequest)
-        
         // タスクを実行
         myTask.resume();
+    }
+    
+    func setUrlA(url: String) {
+        mPlayerUrlA = url;
+    }
+    
+    func setUrlB(url: String) {
+        mPlayerUrlB = url;
     }
     
     /*
@@ -103,18 +215,18 @@ class AudioViewController: UIViewController,URLSessionDownloadDelegate {
      */
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         if (mPlayerSel==0) {
-            ownPlayer.setValue(url: location)
-            if (ownPlayer.isPlaying == 1) {
-                ownPlayer.stop();
+            mPlayerA.setValue(url: location)
+            if (mPlayerA.isPlaying == 1) {
+                mPlayerA.stop();
             } else {
-                ownPlayer.play();
+                mPlayerA.play();
             }
         } else {
-            partnerPlayer.setValue(url: location)
-            if (partnerPlayer.isPlaying == 1) {
-                partnerPlayer.stop();
+            mPlayerB.setValue(url: location)
+            if (mPlayerB.isPlaying == 1) {
+                mPlayerB.stop();
             } else {
-                partnerPlayer.play();
+                mPlayerB.play();
             }
         }
     }

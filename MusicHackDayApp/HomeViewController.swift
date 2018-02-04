@@ -13,7 +13,7 @@ import SwiftyJSON
 import Nuke
 import AVFoundation
 
-class HomeViewController: UIViewController {
+class HomeViewController: AudioViewController {
     
     @IBOutlet weak var ownButton: UIButton!
     @IBOutlet weak var backgroundImageView: UIImageView!
@@ -51,9 +51,6 @@ class HomeViewController: UIViewController {
         )
     }()
     
-    let ownPlayer: AudioPlayerUtil = AudioPlayerUtil()
-    let partnerPlayer: AudioPlayerUtil! = AudioPlayerUtil()
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -68,17 +65,8 @@ class HomeViewController: UIViewController {
         setupLocation()
         requestAuthorized()
         startFetchLocation()
-        
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-    }
-
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -87,74 +75,82 @@ class HomeViewController: UIViewController {
     }
     
     @IBAction func ownButtonPressed(_ sender: Any) {
+//        let mp3URL = "https://maoudamashii.jokersounds.com/music/bgm/mp3/bgm_maoudamashii_healing17.mp3"
+//        self.selectedSound?.mp3URL = mp3URL
+//        self.playSound(mp3URL: mp3URL, player: self.ownPlayer)
+//        self.dismiss(animated: true, completion: nil)
+//        pushButtonB(UIButton())
         let viewController = UIStoryboard(name: "SearchViewController", bundle: nil).instantiateInitialViewController() as! SearchViewController
         viewController.done = { selectedSound in
-            self.selectedSound = selectedSound
-            self.postSound(with: selectedSound.id)
+            self.pushButtonB(UIButton())
+            self.PushButtonA(UIButtion())
+            self.configureOwnSound()
+            self.configurePartner()
+            self.dismiss(animated: true, completion: nil)
         }
         present(viewController, animated: true, completion: nil)
     }
     
-    func postSound(with id: Int) {
-        guard let token = UserDefaults.standard.string(forKey: "token") else {
-            print("necessary token")
-            return
-        }
-
-        Alamofire
-            .request(
-                "https://taptappun.net/hackathon/musichackday2018/api/sound/play",
-                method: .post,
-                parameters: [
-                    "token": token,
-                    "sound_id": id
-                ]
-            )
-            .responseJSON { (response) in
-                let json = JSON(response.result.value!)
-                let mp3URL = json["sound_file_url"].string ?? "https://maoudamashii.jokersounds.com/music/bgm/mp3/bgm_maoudamashii_orchestra26.mp3"
-                self.selectedSound?.mp3URL = mp3URL
-                self.configureOwnSound()
-                self.playSound(mp3URL: mp3URL, player: self.ownPlayer)
-        }
-        
-        dismiss(animated: true, completion: nil)
-    }
+//    func postSound(with id: Int) {
+//        guard let token = UserDefaults.standard.string(forKey: "token") else {
+//            print("necessary token")
+//            return
+//        }
+//
+//        Alamofire
+//            .request(
+//                "https://taptappun.net/hackathon/musichackday2018/api/sound/play",
+//                method: .post,
+//                parameters: [
+//                    "token": token,
+//                    "sound_id": id
+//                ]
+//            )
+//            .responseJSON { (response) in
+//                let json = JSON(response.result.value!)
+//                self.configureOwnSound()
+//        }
+//
+//    }
     
+    func configurePartner() {
+        ownSoundNameLabel.text = "Sekai no owari"
+        ownArtistNameLabel.text = "RPG"
+    }
+
     func configureOwnSound() {
-        guard
-            let selectedSound = selectedSound
-            else {
-            return
-        }
-       
-        
-        let url = URL(string: selectedSound.imageUrl)!
+        let url = URL(string: "https://l.facebook.com/l.php?u=https%3A%2F%2Fimg.youtube.com%2Fvi%2FUjb-ZeX7Mo8%2Fdefault.jpg&h=ATP3dM1R2a975zoEMXb65CJtY3ON7PkeNzN5vYcCzpzFJksxDvFpPDhIId2FMcHuVbFCAnAxDT7bQQ6_2veQM1fFjtBLJHVi9rAIMh8uYij5dWny1xnxBog2Uvsoq2HEvWfZv2UHRihJjH-fVeaPeQ")!
         Manager.shared.loadImage(with: url, into: ownImageView)
-        ownSoundNameLabel.text = selectedSound.name
-        ownArtistNameLabel.text = selectedSound.artistName
+        ownSoundNameLabel.text = "Ultra Soul!"
+        ownArtistNameLabel.text = "B'z"
     }
     
-    func playSound(mp3URL: String, player: AudioPlayerUtil) {
-        // ダウンロード先のURLからリクエストを生成
-        let myURL:URL = URL(string: mp3URL)!;
-        let myRequest:URLRequest = URLRequest(url: myURL);
-        
-        // ダウンロードタスクを生成
-        let myTask: URLSessionDownloadTask = URLSession.shared.downloadTask(with: myRequest) { (url, response, error) in
-            guard let url = url else {
-                return
-            }
-            
-
-            player.stop()
-            player.setValue(url: url)
-            player.play()
-        }
-        
-        // タスクを実行
-        myTask.resume();
-    }
+//    func playSound(mp3URL: String, player: AVAVAudioPlayerUtil) {
+//        // ダウンロード先のURLからリクエストを生成
+//        let myURL:URL = URL(string: mp3URL)!;
+//        let myRequest:URLRequest = URLRequest(url: myURL);
+//
+//        // ダウンロードタスクを生成
+//        let myTask: URLSessionDownloadTask = URLSession.shared.downloadTask(with: myRequest) { (location, response, error) in
+//            DispatchQueue.main.async {
+//                guard let location = location else {
+//                    return
+//                }
+//
+//                let audioUrl = myURL
+//                let documentsDirectoryURL =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+//
+//                let destinationUrl = documentsDirectoryURL.appendingPathComponent(audioUrl.lastPathComponent)
+//                print(destinationUrl)
+//
+//                player.setValue(url: location)
+//                player.play()
+//            }
+//        }
+//
+//        // タスクを実行
+//        myTask.resume();
+//    }
     
     func resetPartnerImageViews(ownLocation: CLLocation) {
         view.subviews.flatMap { $0 as? PartnerImageView }.forEach { $0.removeFromSuperview() }
@@ -165,7 +161,6 @@ class HomeViewController: UIViewController {
         }
         
         zip(imageViews, neighbours).forEach { (imageView, neighbour) in
-            
             view.insertSubview(imageView, aboveSubview: backgroundImageView)
             appendNeighbour(imageView: imageView, ownLocation: ownLocation, lat: neighbour.lat, lon: neighbour.lon)
         }
@@ -176,7 +171,9 @@ class HomeViewController: UIViewController {
         let distanceY = ((lon - ownLocation.coordinate.longitude) / Double(UIScreen.main.bounds.height)) * Double(ownButton.center.y)
         
         imageView.frame.size = CGSize(width: 60, height: 60)
-        imageView.center = CGPoint(x: distanceX, y: distanceY)
+        let x = UIScreen.main.bounds.width - 120
+        let y = CGFloat(100)
+        imageView.center = CGPoint(x: x, y: y)
     }
 }
 

@@ -65,6 +65,8 @@ class ViewController: UIViewController {
                 let viewController = UIStoryboard(name: "HomeViewController", bundle: nil).instantiateInitialViewController()!
                 self.navigationController?.pushViewController(viewController, animated: true)
             case .failure(let errorMessage):
+                let viewController = UIStoryboard(name: "HomeViewController", bundle: nil).instantiateInitialViewController()!
+                self.navigationController?.pushViewController(viewController, animated: true)
                 print("error: \(errorMessage)")
             }
         }

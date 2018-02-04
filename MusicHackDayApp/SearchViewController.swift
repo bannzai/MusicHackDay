@@ -55,6 +55,8 @@ class SearchViewController: UIViewController {
                 })
                 self.tableView.reloadData()
         }
+        
+        view.endEditing(true)
     }
 }
 

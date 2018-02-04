@@ -83,7 +83,7 @@ class HomeViewController: AudioViewController {
         let viewController = UIStoryboard(name: "SearchViewController", bundle: nil).instantiateInitialViewController() as! SearchViewController
         viewController.done = { selectedSound in
             self.pushButtonB(UIButton())
-            self.PushButtonA(UIButtion())
+            self.PushButtonA(UIButton()
             self.configureOwnSound()
             self.configurePartner()
             self.dismiss(animated: true, completion: nil)
@@ -114,8 +114,8 @@ class HomeViewController: AudioViewController {
 //    }
     
     func configurePartner() {
-        ownSoundNameLabel.text = "Sekai no owari"
-        ownArtistNameLabel.text = "RPG"
+        partnerSoundNameLabel.text = "Sekai no owari"
+        partnerArtistNameLabel.text = "RPG"
     }
 
     func configureOwnSound() {

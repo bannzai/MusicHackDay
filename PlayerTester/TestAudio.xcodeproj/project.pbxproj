@@ -8,24 +8,24 @@
 
 /* Begin PBXBuildFile section */
 		8842A4711D54ACB100387E62 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8842A4701D54ACB100387E62 /* AppDelegate.swift */; };
-		8842A4731D54ACB100387E62 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8842A4721D54ACB100387E62 /* ViewController.swift */; };
 		8842A4761D54ACB100387E62 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8842A4741D54ACB100387E62 /* Main.storyboard */; };
 		8842A4781D54ACB100387E62 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8842A4771D54ACB100387E62 /* Assets.xcassets */; };
 		8842A47B1D54ACB100387E62 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8842A4791D54ACB100387E62 /* LaunchScreen.storyboard */; };
 		8842A4831D54AF3A00387E62 /* sample_sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8842A4821D54AF3A00387E62 /* sample_sound.mp3 */; };
 		88476BBD1D5579B90090E262 /* sample_sound2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88476BBC1D5579B90090E262 /* sample_sound2.mp3 */; };
+		BC69841F20265FAB0060FE7D /* AudioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC69841E20265FAB0060FE7D /* AudioViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		8842A46D1D54ACB100387E62 /* TestAudio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestAudio.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8842A4701D54ACB100387E62 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		8842A4721D54ACB100387E62 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		8842A4751D54ACB100387E62 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8842A4771D54ACB100387E62 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8842A47A1D54ACB100387E62 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8842A47C1D54ACB100387E62 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8842A4821D54AF3A00387E62 /* sample_sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = sample_sound.mp3; sourceTree = "<group>"; };
 		88476BBC1D5579B90090E262 /* sample_sound2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = sample_sound2.mp3; sourceTree = "<group>"; };
+		BC69841E20265FAB0060FE7D /* AudioViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,7 +59,7 @@
 			isa = PBXGroup;
 			children = (
 				8842A4701D54ACB100387E62 /* AppDelegate.swift */,
-				8842A4721D54ACB100387E62 /* ViewController.swift */,
+				BC69841E20265FAB0060FE7D /* AudioViewController.swift */,
 				8842A4741D54ACB100387E62 /* Main.storyboard */,
 				8842A4771D54ACB100387E62 /* Assets.xcassets */,
 				8842A4791D54ACB100387E62 /* LaunchScreen.storyboard */,
@@ -143,8 +143,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8842A4731D54ACB100387E62 /* ViewController.swift in Sources */,
 				8842A4711D54ACB100387E62 /* AppDelegate.swift in Sources */,
+				BC69841F20265FAB0060FE7D /* AudioViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,6 +261,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.test.TestAudio;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -272,6 +273,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.test.TestAudio;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

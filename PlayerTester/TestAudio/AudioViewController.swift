@@ -7,16 +7,25 @@ import AVKit
 
 class AVAudioPlayerUtil {
     
-    var audioPlayer:AVAudioPlayer = AVAudioPlayer();
+    var audioPlayer:AVAudioPlayer!
     var isPlaying = 0;
     
-    func setValue(url: URL){
-        self.audioPlayer = try! AVAudioPlayer(contentsOf: url)
+    func setValue(url: URL) {
+        var audioError:NSError?
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: url)
+        } catch let error as NSError {
+            audioError = error
+            audioPlayer = nil
+        }
+        // エラーが起きたとき
+        if let error = audioError {
+            print("Error \(error.localizedDescription)")
+        }
         self.audioPlayer.prepareToPlay();
     }
-    
-    func play(){
-        self.audioPlayer.volume = 0.3
+    func play() {
+        self.audioPlayer.enableRate = true;
         self.audioPlayer.play();
         isPlaying = 1;
     }
@@ -25,8 +34,16 @@ class AVAudioPlayerUtil {
         isPlaying = 0;
     }
     func changeVolume(volume : Float) {
-        self.audioPlayer.volume = volume;
+        if ( isPlaying == 1 ) {
+            self.audioPlayer.volume = volume;
+        }
     }
+    func changeTempo(tempo : Float) {
+        if ( isPlaying == 1 ) {
+            self.audioPlayer.rate = tempo;
+        }
+    }
+    
 }
 
 class AudioViewController: UIViewController,URLSessionDownloadDelegate {
@@ -36,19 +53,22 @@ class AudioViewController: UIViewController,URLSessionDownloadDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad();
-        
         mPlayerA = AVAudioPlayerUtil();
         mPlayerB = AVAudioPlayerUtil();
     }
     
     @IBAction func changeVolume(sender: UISlider) {
         let vol = sender.value;
-        mPlayerA.changeVolume(volume: vol)
-        mPlayerB.changeVolume(volume: vol)
+        mPlayerA.changeVolume(volume: vol);
+        mPlayerB.changeVolume(volume: 1.0 - vol);
     }
     
-    // player 1
-    @IBAction func pushButton1(sender: UIButton) {
+    @IBAction func ChangeTempoA(_ sender: UISlider) {
+        let tempo = sender.value;
+        mPlayerA.changeTempo(tempo: tempo);
+    }
+    
+    @IBAction func PushButtonA(_ sender: UIButton) {
         mPlayerSel = 0;
         
         // 通信のコンフィグを用意
@@ -65,10 +85,10 @@ class AudioViewController: UIViewController,URLSessionDownloadDelegate {
         
         // タスクを実行
         myTask.resume();
+    
     }
     
-    //再生ボタン2押下時の呼び出しメソッド
-    @IBAction func pushButton2(sender: UIButton) {
+    @IBAction func pushButtonB(_ sender: UIButton) {
         mPlayerSel = 1;
         // 通信のコンフィグを用意
         
@@ -80,8 +100,6 @@ class AudioViewController: UIViewController,URLSessionDownloadDelegate {
             delegate: self,
             delegateQueue: nil
         );
-        
-        
         
         // ダウンロード先のURLからリクエストを生成
         let myURL:URL = URL(string: "https://maoudamashii.jokersounds.com/music/bgm/mp3/bgm_maoudamashii_healing17.mp3")!;

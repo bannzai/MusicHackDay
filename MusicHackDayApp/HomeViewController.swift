@@ -66,13 +66,14 @@ class HomeViewController: AudioViewController {
         requestAuthorized()
         startFetchLocation()
         
+        let partnerImageView = PartnerImageView(image: UIImage(named: "sub_btn")!)
+        appendNeighbour(imageView: partnerImageView, lat: 10, lon: 10)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         timer.fire()
-        nearistAPITimer.fire()
     }
     
     @IBAction func ownButtonPressed(_ sender: Any) {
@@ -165,6 +166,7 @@ class HomeViewController: AudioViewController {
     }
     
     func appendNeighbour(imageView: UIImageView,  lat: Double, lon: Double) {
+        view.insertSubview(imageView, aboveSubview: backgroundImageView)
         imageView.frame.size = CGSize(width: 60, height: 60)
         let x = UIScreen.main.bounds.width - 120
         let y = CGFloat(100)

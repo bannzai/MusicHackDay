@@ -56,7 +56,7 @@ struct Neighbour {
     var distance: Int
     var lat: Double
     var lon: Double
-    var user_token: String
+    var token: String
     
     init(artist_name: String,
          sound_url: String,
@@ -64,13 +64,13 @@ struct Neighbour {
          distance: Int,
          lat: Double,
          lon: Double,
-         user_token: String) {
+         token: String) {
         self.artist_name = artist_name
         self.sound_url = sound_url
         self.sound_name = sound_name
         self.distance = distance
         self.lat = lat
         self.lon = lon
-        self.user_token = user_token
+        self.token = token
     }
 }

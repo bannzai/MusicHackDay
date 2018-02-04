@@ -63,6 +63,8 @@ class HomeViewController: UIViewController {
         partnerSoundNameLabel.text = ""
         partnerArtistNameLabel.text = ""
         
+        ownImageView.layer.cornerRadius = 4
+        
         setupLocation()
         requestAuthorized()
         startFetchLocation()
@@ -85,19 +87,12 @@ class HomeViewController: UIViewController {
     }
     
     @IBAction func ownButtonPressed(_ sender: Any) {
-        let partnerImageView = PartnerImageView(image: UIImage(named: "sub_btn")!)
-        let fakeLocation = CLLocation(latitude: 10, longitude: 10)
-        appendNeighbour(imageView: partnerImageView, ownLocation: fakeLocation, lat: 20, lon: 20)
-        
-//        let url = "https://cdn.fbsbx.com/v/t59.3654-21/27020458_1908094265930315_1875117648384098304_n.m4a/hoge.m4a?oh=cfb1366bc17aa8fb505e96eb59b9a609&oe=5A7871AD&dl=1https://cdn.fbsbx.com/v/t59.3654-21/27020458_1908094265930315_1875117648384098304_n.m4a/hoge.m4a?oh=cfb1366bc17aa8fb505e96eb59b9a609&oe=5A7871AD&dl=1"
-//        playSound(mp3URL: url, player: ownPlayer)
-
-//        let viewController = UIStoryboard(name: "SearchViewController", bundle: nil).instantiateInitialViewController() as! SearchViewController
-//        viewController.done = { selectedSound in
-//            self.selectedSound = selectedSound
-//            self.postSound(with: selectedSound.id)
-//        }
-//        present(viewController, animated: true, completion: nil)
+        let viewController = UIStoryboard(name: "SearchViewController", bundle: nil).instantiateInitialViewController() as! SearchViewController
+        viewController.done = { selectedSound in
+            self.selectedSound = selectedSound
+            self.postSound(with: selectedSound.id)
+        }
+        present(viewController, animated: true, completion: nil)
     }
     
     func postSound(with id: Int) {
@@ -111,7 +106,7 @@ class HomeViewController: UIViewController {
                 "https://taptappun.net/hackathon/musichackday2018/api/sound/play",
                 method: .post,
                 parameters: [
-                    "user_token": token,
+                    "token": token,
                     "sound_id": id
                 ]
             )
@@ -123,7 +118,7 @@ class HomeViewController: UIViewController {
                 self.playSound(mp3URL: mp3URL, player: self.ownPlayer)
         }
         
-        navigationController?.popViewController(animated: true)
+        dismiss(animated: true, completion: nil)
     }
     
     func configureOwnSound() {
@@ -157,6 +152,7 @@ class HomeViewController: UIViewController {
             
             if player.isPlaying == 1 {
                 player.stop()
+                return
             }
             
             player.play()
@@ -250,7 +246,7 @@ extension HomeViewController {
         }
         
         let parameters: Parameters = [
-            "user_token": token,
+            "token": token,
             "lat": location.coordinate.latitude,
             "lon": location.coordinate.longitude
         ]
@@ -260,7 +256,10 @@ extension HomeViewController {
                           method: .post,
                           parameters: parameters)
             .responseJSON { response in
-                let json = JSON(response.result.value!)
+                guard let value = response.result.value else {
+                    return
+                }
+                let json = JSON(value)
                 self.neighbours = [Neighbour]()
                 json["neighbours"].forEach{(_, data) in
                     self.neighbours.append(
@@ -271,7 +270,7 @@ extension HomeViewController {
                             distance: data["distance"].int!,
                             lat: data["lat"].double!,
                             lon: data["lon"].double!,
-                            user_token: data["user_token"].string!
+                            token: data["user_token"].string!
                         )
                     )
                 }
@@ -280,8 +279,8 @@ extension HomeViewController {
                     print(
                         "artist_name: "
                             + neighbour.artist_name
-                            + ", user_token: "
-                            + neighbour.user_token
+                            + ", token: "
+                            + neighbour.token
                     )
                 }
                 

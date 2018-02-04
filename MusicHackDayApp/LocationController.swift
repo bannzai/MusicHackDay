@@ -16,7 +16,7 @@ class LocationController: UIViewController, CLLocationManagerDelegate{
         var distance: Int
         var lat: Double
         var lon: Double
-        var user_token: String
+        var token: String
         
         init(artist_name: String,
              sound_url: String,
@@ -24,14 +24,14 @@ class LocationController: UIViewController, CLLocationManagerDelegate{
              distance: Int,
              lat: Double,
              lon: Double,
-             user_token: String) {
+             token: String) {
             self.artist_name = artist_name
             self.sound_url = sound_url
             self.sound_name = sound_name
             self.distance = distance
             self.lat = lat
             self.lon = lon
-            self.user_token = user_token
+            self.token = token
         }
     }
     //CLLocationManagerの入れ物を用意
@@ -96,7 +96,7 @@ class LocationController: UIViewController, CLLocationManagerDelegate{
 //                "name": "value"
 //            ]
             let parameters: Parameters = [
-                "user_token": "aaaa",
+                "token": "aaaa",
                 "lat": location.coordinate.latitude,
                 "lon": location.coordinate.longitude
             ]
@@ -119,14 +119,14 @@ class LocationController: UIViewController, CLLocationManagerDelegate{
                                       distance: data["distance"].int!,
                                       lat: data["lat"].double!,
                                       lon: data["lon"].double!,
-                                      user_token: data["user_token"].string!
+                                      token: data["token"].string!
                             )
                         )
                     }
                     
                     
                     for neighbour in self.neighbours {
-                        print("artist_name" + neighbour.artist_name + ":user_token" + neighbour.user_token)
+                        print("artist_name" + neighbour.artist_name + ":token" + neighbour.token)
                     }
             }
         }

@@ -28,6 +28,9 @@ class SearchViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
+        textField.delegate = self
+        textField.returnKeyType = .done
+
         let nib = UINib(nibName: "SearchTableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "Cell")
     }
@@ -42,7 +45,7 @@ class SearchViewController: UIViewController {
             "https://taptappun.net/hackathon/musichackday2018/api/sound/search_one",
             method: .get,
             parameters: [
-                "user_token": token,
+                "token": token,
                 "keyword": word
             ])
             .responseJSON { (response) in
@@ -74,12 +77,24 @@ extension SearchViewController: UITableViewDataSource {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.backgroundColor = .clear
+    }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return list.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return 140
     }
 
+}
+
+extension SearchViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        searchButtonPressed("")
+        textField.resignFirstResponder()
+        return true
+    }
 }

@@ -11,6 +11,7 @@ import CoreLocation
 import Alamofire
 import SwiftyJSON
 import Nuke
+import AVFoundation
 
 class HomeViewController: UIViewController {
     
@@ -50,6 +51,8 @@ class HomeViewController: UIViewController {
         )
     }()
     
+    let ownPlayer: AudioPlayerUtil = AudioPlayerUtil()
+    let partnerPlayer: AudioPlayerUtil! = AudioPlayerUtil()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,6 +84,9 @@ class HomeViewController: UIViewController {
     }
     
     @IBAction func ownButtonPressed(_ sender: Any) {
+//        let url = "https://maoudamashii.jokersounds.com/music/bgm/mp3/bgm_maoudamashii_orchestra26.mp3"
+//        playSound(mp3URL: url, player: ownPlayer)
+        
         let viewController = UIStoryboard(name: "SearchViewController", bundle: nil).instantiateInitialViewController() as! SearchViewController
         viewController.done = { selectedSound in
             self.selectedSound = selectedSound
@@ -106,8 +112,10 @@ class HomeViewController: UIViewController {
             )
             .responseJSON { (response) in
                 let json = JSON(response.result.value!)
-                self.selectedSound?.mp3URL = json["sound_file_url"].string ?? "https://maoudamashii.jokersounds.com/music/bgm/mp3/bgm_maoudamashii_orchestra26.mp3"
+                let mp3URL = json["sound_file_url"].string ?? "https://maoudamashii.jokersounds.com/music/bgm/mp3/bgm_maoudamashii_orchestra26.mp3"
+                self.selectedSound?.mp3URL = mp3URL
                 self.configureOwnSound()
+                self.playSound(mp3URL: mp3URL, player: self.ownPlayer)
         }
         
         navigationController?.popViewController(animated: true)
@@ -125,6 +133,32 @@ class HomeViewController: UIViewController {
         Manager.shared.loadImage(with: url, into: ownImageView)
         ownSoundNameLabel.text = selectedSound.name
         ownArtistNameLabel.text = selectedSound.artistName
+    }
+    
+    func playSound(mp3URL: String, player: AudioPlayerUtil) {
+        // ダウンロード先のURLからリクエストを生成
+        let myURL:URL = URL(string: mp3URL)!;
+        let myRequest:URLRequest = URLRequest(url: myURL);
+        
+        // ダウンロードタスクを生成
+        let myTask: URLSessionDownloadTask = URLSession.shared.downloadTask(with: myRequest) { (url, response, error) in
+            guard let url = url else {
+                return
+            }
+            
+            if !player.isExists(url: url) {
+                player.setValue(url: url)
+            }
+            
+            if player.isPlaying == 1 {
+                player.stop()
+            }
+            
+            player.play()
+        }
+        
+        // タスクを実行
+        myTask.resume();
     }
     
     func resetPartnerImageViews(ownLocation: CLLocation) {

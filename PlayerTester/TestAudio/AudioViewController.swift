@@ -5,7 +5,7 @@ import UIKit
 import AVFoundation
 import AVKit
 
-class AVAudioPlayerUtil {
+class AudioPlayerUtil {
     
     var audioPlayer:AVAudioPlayer = AVAudioPlayer();
     var isPlaying = 0;
@@ -13,6 +13,11 @@ class AVAudioPlayerUtil {
     func setValue(url: URL){
         self.audioPlayer = try! AVAudioPlayer(contentsOf: url)
         self.audioPlayer.prepareToPlay();
+    }
+    
+    func isExists(url: URL)  -> Bool {
+        let value = try? AVAudioPlayer(contentsOf: url)
+        return value == nil
     }
     
     func play(){
@@ -30,21 +35,21 @@ class AVAudioPlayerUtil {
 }
 
 class AudioViewController: UIViewController,URLSessionDownloadDelegate {
-    var mPlayerA: AVAudioPlayerUtil!;
-    var mPlayerB: AVAudioPlayerUtil!;
+    var ownPlayer: AudioPlayerUtil!;
+    var partnerPlayer: AudioPlayerUtil!;
     var mPlayerSel = 0;
     
     override func viewDidLoad() {
         super.viewDidLoad();
         
-        mPlayerA = AVAudioPlayerUtil();
-        mPlayerB = AVAudioPlayerUtil();
+        ownPlayer = AudioPlayerUtil();
+        partnerPlayer = AudioPlayerUtil();
     }
     
     @IBAction func changeVolume(sender: UISlider) {
         let vol = sender.value;
-        mPlayerA.changeVolume(volume: vol)
-        mPlayerB.changeVolume(volume: vol)
+        ownPlayer.changeVolume(volume: vol)
+        partnerPlayer.changeVolume(volume: vol)
     }
     
     // player 1
@@ -99,18 +104,18 @@ class AudioViewController: UIViewController,URLSessionDownloadDelegate {
      */
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         if (mPlayerSel==0) {
-            mPlayerA.setValue(url: location)
-            if (mPlayerA.isPlaying == 1) {
-                mPlayerA.stop();
+            ownPlayer.setValue(url: location)
+            if (ownPlayer.isPlaying == 1) {
+                ownPlayer.stop();
             } else {
-                mPlayerA.play();
+                ownPlayer.play();
             }
         } else {
-            mPlayerB.setValue(url: location)
-            if (mPlayerB.isPlaying == 1) {
-                mPlayerB.stop();
+            partnerPlayer.setValue(url: location)
+            if (partnerPlayer.isPlaying == 1) {
+                partnerPlayer.stop();
             } else {
-                mPlayerB.play();
+                partnerPlayer.play();
             }
         }
     }

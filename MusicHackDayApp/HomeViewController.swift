@@ -37,6 +37,10 @@ struct Neighbour {
     }
 }
 
+class PartnerImageView: UIImageView {
+    
+}
+
 class HomeViewController: UIViewController {
     
     @IBOutlet weak var ownButton: UIButton!
@@ -44,7 +48,8 @@ class HomeViewController: UIViewController {
     
     var locationManager : CLLocationManager!
     var neighbours = [Neighbour]()
-
+    var lastRecognizedLocation : CLLocation?
+    
     lazy var timer: Timer = {
         return Timer.scheduledTimer(
             timeInterval: 1,
@@ -55,22 +60,53 @@ class HomeViewController: UIViewController {
         )
     }()
     
+    lazy var nearistAPITimer: Timer = {
+        return Timer.scheduledTimer(
+            timeInterval: 1,
+            target: self,
+            selector: #selector(callLocationAPI),
+            userInfo: nil,
+            repeats: true
+        )
+    }()
+    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupLocation()
+        requestAuthorized()
+        startFetchLocation()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         timer.fire()
-        logginLocation()
+        nearistAPITimer.fire()
     }
     
     @IBAction func ownButtonPressed(_ sender: Any) {
-        let viewController = UIStoryboard(name: "LocationViewController", bundle: nil).instantiateInitialViewController()!
-        navigationController?.pushViewController(viewController, animated: true)
+//        locationManager(locationManager, didUpdateLocations: [CLLocation(latitude: 10, longitude: 10)])
+//        locationManager(locationManager, didUpdateLocations: [CLLocation(latitude: 11, longitude: 11)])
+//        locationManager(locationManager, didUpdateLocations: [CLLocation(latitude: 20, longitude: 20)])
+    }
+    
+    func resetPartnerImageViews(ownLocation: CLLocation) {
+        view.subviews.flatMap { $0 as? PartnerImageView }.forEach { $0.removeFromSuperview() }
+        
+        let imageViews = neighbours.map { (neighbour) -> PartnerImageView in
+            let partnerImageView = PartnerImageView(image: UIImage(named: "sub_btn")!)
+            return partnerImageView
+        }
+        
+        zip(imageViews, neighbours).forEach { (imageView, neighbour) in
+            view.insertSubview(imageView, aboveSubview: backgroundImageView)
+            let distanceX = (neighbour.lat - ownLocation.coordinate.latitude) / Double(UIScreen.main.bounds.width)
+            let distanceY = neighbour.lon - ownLocation.coordinate.longitude / Double(UIScreen.main.bounds.height)
+            imageView.frame.size = CGSize(width: 48, height: 48)
+            imageView.center = CGPoint(x: distanceX, y: distanceY)
+        }
     }
 }
 
@@ -106,30 +142,72 @@ extension HomeViewController {
         locationManager.delegate = self
     }
     
-    func logginLocation() {
+    func requestAuthorized() {
         // 位置情報の認証チェック
         let status = CLLocationManager.authorizationStatus()
-        if (status == .notDetermined) {
-            print("許可、不許可を選択してない");
-            // 常に許可するように求める
-            locationManager.requestAlwaysAuthorization();
+        if status != .notDetermined {
+            return
         }
-        else if (status == .restricted) {
-            print("機能制限している");
-        }
-        else if (status == .denied) {
-            print("許可していない");
-        }
-        else if (status == .authorizedWhenInUse) {
-            print("このアプリ使用中のみ許可している");
-            locationManager.startUpdatingLocation();
-        }
-        else if (status == .authorizedAlways) {
-            print("常に許可している");
+        
+        locationManager.requestAlwaysAuthorization();
+    }
+    
+    func startFetchLocation() {
+        let status = CLLocationManager.authorizationStatus()
+        if status == .authorizedWhenInUse || status == .authorizedAlways {
             locationManager.startUpdatingLocation();
         }
     }
     
+    @objc func callLocationAPI() {
+        guard let location = lastRecognizedLocation else {
+            return
+        }
+        
+        guard let token = UserDefaults.standard.string(forKey: "token") else {
+            print("necessary token")
+            return
+        }
+        
+        let parameters: Parameters = [
+            "user_token": token,
+            "lat": location.coordinate.latitude,
+            "lon": location.coordinate.longitude
+        ]
+        
+        let sendPotisionURL = "https://taptappun.net/hackathon/musichackday2018/api/location/notify"
+        Alamofire.request(sendPotisionURL,
+                          method: .post,
+                          parameters: parameters)
+            .responseJSON { response in
+                let json = JSON(response.result.value!)
+                self.neighbours = [Neighbour]()
+                json["neighbours"].forEach{(_, data) in
+                    self.neighbours.append(
+                        Neighbour(
+                            artist_name: data["artist_name"].string!,
+                            sound_url: data["sound_url"].string!,
+                            sound_name: data["sound_name"].string!,
+                            distance: data["distance"].int!,
+                            lat: data["lat"].double!,
+                            lon: data["lon"].double!,
+                            user_token: data["user_token"].string!
+                        )
+                    )
+                }
+                
+                for neighbour in self.neighbours {
+                    print(
+                        "artist_name: "
+                            + neighbour.artist_name
+                            + ", user_token: "
+                            + neighbour.user_token
+                    )
+                }
+                
+                self.resetPartnerImageViews(ownLocation: location)
+        }
+    }
 }
 
 extension HomeViewController: CLLocationManagerDelegate {
@@ -139,53 +217,8 @@ extension HomeViewController: CLLocationManagerDelegate {
     
     // 位置情報が取得されると呼ばれる
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let token = UserDefaults.standard.string(forKey: "token") else {
-            print("necessary token")
-            return
-        }
         // 最新の位置情報を取得 locationsに配列で入っている位置情報の最後が最新となる
-        let location : CLLocation = locations.last!;
-        
-        if(location.horizontalAccuracy > 0){
-            let parameters: Parameters = [
-                "user_token": token,
-                "lat": location.coordinate.latitude,
-                "lon": location.coordinate.longitude
-            ]
-            
-            let sendPotisionURL = "https://taptappun.net/hackathon/musichackday2018/api/location/notify"
-            Alamofire.request(sendPotisionURL,
-                              method: .post,
-                              parameters: parameters)
-                .responseJSON { response in
-                    let json = JSON(response.result.value!)
-                    self.neighbours = [Neighbour]()
-                    json["neighbours"].forEach{(_, data) in
-                        self.neighbours.append(
-                            Neighbour(
-                                artist_name: data["artist_name"].string!,
-                                sound_url: data["sound_url"].string!,
-                                sound_name: data["sound_name"].string!,
-                                distance: data["distance"].int!,
-                                lat: data["lat"].double!,
-                                lon: data["lon"].double!,
-                                user_token: data["user_token"].string!
-                            )
-                        )
-                    }
-                    
-                    
-                    for neighbour in self.neighbours {
-                        print(
-                            "artist_name: "
-                                + neighbour.artist_name
-                                + ", user_token: "
-                                + neighbour.user_token
-                        )
-                    }
-            }
-        }
-        
+        lastRecognizedLocation = locations.last!;
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {

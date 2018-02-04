@@ -75,7 +75,6 @@
                             <constraint firstItem="1sK-EN-8d1" firstAttribute="leading" secondItem="6fL-2e-Yxw" secondAttribute="leading" id="7SR-2l-m2m"/>
                             <constraint firstItem="tqV-3A-5ax" firstAttribute="leading" secondItem="6fL-2e-Yxw" secondAttribute="leading" id="DSD-Gw-fpo"/>
                             <constraint firstItem="tqV-3A-5ax" firstAttribute="trailing" secondItem="6fL-2e-Yxw" secondAttribute="trailing" id="Gy1-rA-8pu"/>
-                            <constraint firstItem="tqV-3A-5ax" firstAttribute="bottom" secondItem="6fL-2e-Yxw" secondAttribute="bottom" id="Ked-G7-aCI"/>
                             <constraint firstItem="6fL-2e-Yxw" firstAttribute="trailing" secondItem="4Ze-Fn-Q0w" secondAttribute="trailing" id="PhX-zJ-pWB"/>
                             <constraint firstItem="4Ze-Fn-Q0w" firstAttribute="top" secondItem="OBk-ci-OII" secondAttribute="top" id="RSk-Za-ugv"/>
                             <constraint firstItem="tqV-3A-5ax" firstAttribute="top" secondItem="1sK-EN-8d1" secondAttribute="bottom" id="URI-jL-IFA"/>
@@ -83,6 +82,7 @@
                             <constraint firstItem="1sK-EN-8d1" firstAttribute="trailing" secondItem="6fL-2e-Yxw" secondAttribute="trailing" id="cw0-HI-ZUm"/>
                             <constraint firstAttribute="bottom" secondItem="4Ze-Fn-Q0w" secondAttribute="bottom" id="kXt-cC-Wkz"/>
                             <constraint firstItem="EB3-C2-PaY" firstAttribute="centerX" secondItem="OBk-ci-OII" secondAttribute="centerX" id="nlS-oA-5cQ"/>
+                            <constraint firstAttribute="bottom" secondItem="tqV-3A-5ax" secondAttribute="bottom" id="sCp-Ze-NWa"/>
                             <constraint firstItem="4Ze-Fn-Q0w" firstAttribute="leading" secondItem="6fL-2e-Yxw" secondAttribute="leading" id="vPq-jd-Vbu"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6fL-2e-Yxw"/>

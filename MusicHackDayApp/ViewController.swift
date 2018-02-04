@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 enum Result {
     case success([String: Any]) // json
@@ -58,7 +59,9 @@ class ViewController: UIViewController {
     @IBAction func startButtonPressed(_ sender: Any) {
         API.request(url:  "https://taptappun.net/hackathon/musichackday2018/authentication/signin") { (result) in
             switch result {
-            case .success(_):
+            case .success(let json):
+                let accessToken = JSON(json)["token"].string!
+                UserDefaults.standard.set(accessToken, forKey: "token")
                 let viewController = UIStoryboard(name: "HomeViewController", bundle: nil).instantiateInitialViewController()!
                 self.navigationController?.pushViewController(viewController, animated: true)
             case .failure(let errorMessage):

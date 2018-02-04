@@ -10,7 +10,6 @@
 		2378FF52B3A63FC3D92CD732 /* Pods_MusicHackDayApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B596F56AD9CBC53F6CA2FE2E /* Pods_MusicHackDayApp.framework */; };
 		863202C02026317F001917A0 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 863202C12026317F001917A0 /* Alamofire.framework */; };
 		868847E1202623F500B7C8E1 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 868847E3202623F500B7C8E1 /* SwiftyJSON.framework */; };
-		86BAB79D2026217900D64694 /* LocationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BAB79C2026217900D64694 /* LocationController.swift */; };
 		86BAB7A0202621B500D64694 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86BAB79F202621B500D64694 /* MapKit.framework */; };
 		86BAB7A2202621D200D64694 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86BAB7A1202621D200D64694 /* CoreLocation.framework */; };
 		BA5177FC202589630094965B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5177FB202589630094965B /* AppDelegate.swift */; };
@@ -21,6 +20,7 @@
 		BAA34ED12025C95800ABC33E /* AudioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA34ED02025C95700ABC33E /* AudioViewController.swift */; };
 		BABFCE8A2025ECC700321042 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABFCE892025ECC700321042 /* HomeViewController.swift */; };
 		BABFCE8C2025ED9E00321042 /* HomeViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BABFCE8B2025ED9E00321042 /* HomeViewController.storyboard */; };
+		BAE7899D2026984B0072E81E /* LocationViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BAE7899C2026984B0072E81E /* LocationViewController.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +43,7 @@
 		BAA34ED02025C95700ABC33E /* AudioViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AudioViewController.swift; path = PlayerTester/TestAudio/AudioViewController.swift; sourceTree = SOURCE_ROOT; };
 		BABFCE892025ECC700321042 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		BABFCE8B2025ED9E00321042 /* HomeViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HomeViewController.storyboard; sourceTree = "<group>"; };
+		BAE7899C2026984B0072E81E /* LocationViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LocationViewController.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +115,7 @@
 				BABFCE892025ECC700321042 /* HomeViewController.swift */,
 				BABFCE8B2025ED9E00321042 /* HomeViewController.storyboard */,
 				86BAB79C2026217900D64694 /* LocationController.swift */,
+				BAE7899C2026984B0072E81E /* LocationViewController.storyboard */,
 			);
 			path = MusicHackDayApp;
 			sourceTree = "<group>";
@@ -154,6 +156,11 @@
 					BA5177F7202589630094965B = {
 						CreatedOnToolsVersion = 9.1;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -184,6 +191,7 @@
 				BA517806202589630094965B /* LaunchScreen.storyboard in Resources */,
 				BA517803202589630094965B /* Assets.xcassets in Resources */,
 				BA517801202589630094965B /* Main.storyboard in Resources */,
+				BAE7899D2026984B0072E81E /* LocationViewController.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,7 +261,6 @@
 				BA5177FE202589630094965B /* ViewController.swift in Sources */,
 				BA5177FC202589630094965B /* AppDelegate.swift in Sources */,
 				BAA34ED12025C95800ABC33E /* AudioViewController.swift in Sources */,
-				86BAB79D2026217900D64694 /* LocationController.swift in Sources */,
 				BABFCE8A2025ECC700321042 /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -393,7 +400,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = R3LC2FVHL9;
+				DEVELOPMENT_TEAM = TQPN82UBBY;
 				INFOPLIST_FILE = MusicHackDayApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tsukurulab.MusicHackDayApp;
@@ -409,7 +416,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = R3LC2FVHL9;
+				DEVELOPMENT_TEAM = TQPN82UBBY;
 				INFOPLIST_FILE = MusicHackDayApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tsukurulab.MusicHackDayApp;
